@@ -20,3 +20,12 @@ phonecatControllers.controller('PhoneDetailCtrl', ['$scope', '$routeParams', 'Ph
       $scope.mainImageUrl = imageUrl;
     }
   }]);
+
+phonecatControllers.controller('NewPhoneCtrl', ['$scope', 'Phone',
+  function($scope, Phone) {
+    $scope.phone = {"imageUrl": "img/phones/default.jpg"};
+
+    $scope.update = function(phone) {
+      Phone.addPhone(phone);
+    };
+  }]);
