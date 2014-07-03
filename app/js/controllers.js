@@ -9,12 +9,16 @@ phonecatControllers.controller('PhoneListCtrl', ['$scope', 'Phone',
     var sliceStart = 0;
     var sliceLength = 3;
     var shift = 2;
+    $scope.loadPrevVisibility = false;
+    $scope.loadMoreVisibility = true;
 
     var makeQuery = function()
     {
       $scope.phones = Phone.queryLimited(sliceStart, sliceLength);
       $scope.phones.$promise.then(function(data) {
         sliceStart = data.offset;
+        $scope.loadPrevVisibility = !data.reachedTop;
+        $scope.loadMoreVisibility = !data.reachedBottom;
       });
     }
 
