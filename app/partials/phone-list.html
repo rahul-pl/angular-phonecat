@@ -14,18 +14,18 @@
     <div class="col-md-10">
       <!--Body content-->
 
-      <button ng-click="loadPrev()" ng-show="loadPrevVisibility">Load Previous</button>
+      <a href="#/phones/sublist/{{(sliceStart-shift) | number:0}}" ng-show="loadPrevVisibility">Load Previous</a>
 
       <ul class="phones">
         <li ng-repeat="phone in phones | filter:query | orderBy:orderProp"
             class="thumbnail phone-listing">
-          <a href="#/phones/{{phone.id}}" class="thumb"><img ng-src="{{phone.imageUrl}}"></a>
-          <a href="#/phones/{{phone.id}}">{{phone.name}}</a>
+          <a href="#/phones/model/{{phone.id}}" class="thumb"><img ng-src="{{phone.imageUrl}}"></a>
+          <a href="#/phones/model/{{phone.id}}">{{phone.name}}</a>
           <p>{{phone.snippet}}</p>
         </li>
       </ul>
 
-      <button ng-click="loadMore()" ng-show="loadMoreVisibility">Load More</button>
+      <a href="#/phones/sublist/{{(sliceStart+shift) | number:0}}" ng-show="loadMoreVisibility">Load More</a>
 
     </div>
   </div>

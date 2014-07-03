@@ -4,34 +4,19 @@
 
 var phonecatControllers = angular.module('phonecatControllers', []);
 
-phonecatControllers.controller('PhoneListCtrl', ['$scope', 'Phone',
-  function($scope, Phone) {
-    var sliceStart = 0;
+phonecatControllers.controller('PhoneListCtrl', ['$scope', '$routeParams', 'Phone',
+  function($scope, $routeParams, Phone) {
+    $scope.sliceStart = parseInt($routeParams.sliceStart);
     var sliceLength = 3;
-    var shift = 2;
-    $scope.loadPrevVisibility = false;
-    $scope.loadMoreVisibility = true;
+    $scope.shift = 2;
 
-    var makeQuery = function()
-    {
-      $scope.phones = Phone.queryLimited(sliceStart, sliceLength);
-      $scope.phones.$promise.then(function(data) {
-        sliceStart = data.offset;
-        $scope.loadPrevVisibility = !data.reachedTop;
-        $scope.loadMoreVisibility = !data.reachedBottom;
-      });
-    }
+    $scope.phones = Phone.queryLimited($scope.sliceStart, sliceLength);
+    $scope.phones.$promise.then(function(data) {
+      $scope.sliceStart = data.offset;
+      $scope.loadPrevVisibility = !data.reachedTop;
+      $scope.loadMoreVisibility = !data.reachedBottom;
+    });
 
-    makeQuery();
-
-    $scope.loadPrev = function() {
-      sliceStart -= shift;
-      makeQuery();
-    }
-    $scope.loadMore = function() {
-      sliceStart += shift;
-      makeQuery();
-    }
     $scope.orderProp = 'age';
   }]);
 

@@ -18,7 +18,7 @@ phonecatServices.factory('Phone', ['$resource', function($resource) {
             offset = 0;
             data.reachedTop = true;
           }
-          if (offset + limit >= data.length) {
+          if ((offset + limit) >= data.length) {
             offset = data.length - limit;
             data.reachedBottom = true;
           }
