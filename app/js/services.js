@@ -14,14 +14,7 @@ phonecatServices.factory('Phone', ['$resource', function($resource) {
       queryLimited: function(offset, limit) {
         var response = phoneService.query();
         response.$promise.then(function(data) {
-          if (offset < 0) {
-            offset = 0;
-          }
-          if (offset + limit > data.length) {
-            offset = data.length - limit;
-          }
-          data.offset = offset;
-
+          data.size = data.length;
           data.splice(0, offset);
           data.splice(limit, data.length);
         })

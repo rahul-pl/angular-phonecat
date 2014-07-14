@@ -14,7 +14,9 @@
     <div class="col-md-10">
       <!--Body content-->
 
-      <button ng-click="loadPrev()">Load Previous</button>
+      <p>Slice Start : {{sliceStart}}</p>
+
+      <button ng-click="loadPrev()" ng-disabled="!isLoadPrevEnabled">Load Previous</button>
 
       <ul class="phones">
         <li ng-repeat="phone in phones | filter:query | orderBy:orderProp"
@@ -25,7 +27,7 @@
         </li>
       </ul>
 
-      <button ng-click="loadMore()">Load More</button>
+      <button ng-click="loadMore()" ng-disabled="!isLoadMoreEnabled">Load More</button>
 
     </div>
   </div>

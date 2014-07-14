@@ -6,27 +6,33 @@ var phonecatControllers = angular.module('phonecatControllers', []);
 
 phonecatControllers.controller('PhoneListCtrl', ['$scope', 'Phone',
   function($scope, Phone) {
-    var sliceStart = 0;
-    var sliceLength = 3;
-    var shift = 2;
+    $scope.sliceStart = 0;
+    var SLICE_LENGTH = 3;
+    var SHIFT = 2;
 
-    var makeQuery = function()
-    {
-      $scope.phones = Phone.queryLimited(sliceStart, sliceLength);
+    var makeQuery = function(offset) {
+      $scope.phones = Phone.queryLimited(offset, SLICE_LENGTH);
       $scope.phones.$promise.then(function(data) {
-        sliceStart = data.offset;
+        $scope.sliceStart = offset;
+        $scope.isLoadPrevEnabled = ($scope.sliceStart > 0);
+        $scope.isLoadMoreEnabled = ($scope.sliceStart + SLICE_LENGTH < data.size);
       });
     }
 
-    makeQuery();
+    makeQuery($scope.sliceStart);
 
     $scope.loadPrev = function() {
-      sliceStart -= shift;
-      makeQuery();
+      disableFurtherLoading();
+      makeQuery($scope.sliceStart - SHIFT);
     }
     $scope.loadMore = function() {
-      sliceStart += shift;
-      makeQuery();
+      disableFurtherLoading();
+      makeQuery($scope.sliceStart + SHIFT);
+    }
+
+    var disableFurtherLoading = function() {
+      $scope.isLoadPrevEnabled = false;
+      $scope.isLoadMoreEnabled = false;
     }
     $scope.orderProp = 'age';
   }]);
